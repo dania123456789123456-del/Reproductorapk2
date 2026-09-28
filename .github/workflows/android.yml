@@ -1,0 +1,27 @@
+name: Descomprimir Proyecto en Repositorio
+
+on:
+  workflow_dispatch: # Te dará un botón manual para activar la descompresión
+
+jobs:
+  unzip-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permiso obligatorio para que GitHub pueda guardar los archivos extraídos
+
+    steps:
+    - name: Descargar el repositorio con el ZIP
+      uses: actions/checkout@v4
+
+    - name: Extraer archivos de Cine.zip
+      run: |
+        unzip Cine.zip
+        rm Cine.zip
+
+    - name: Subir el código fuente extraído al repositorio
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Código fuente descomprimido automáticamente por GitHub Actions" || exit 0
+        git push
