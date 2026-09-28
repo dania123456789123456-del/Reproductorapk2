@@ -1,0 +1,6 @@
+{
+  "name": "HLS Media Player",
+  "description": "Custom high-performance ExoPlayer with advanced HLS stream quality selectors, dual audio rendering, custom local subtitle embedding, scale streatching, custom sequential series playlist controllers, and automatic playback history persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
