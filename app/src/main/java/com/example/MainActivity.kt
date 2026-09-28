@@ -169,17 +169,17 @@ class MainActivity : ComponentActivity() {
                         } else {
                             when (appMode) {
                                 null -> ModeSelectionScreen(
-                                    onSelectLinks = { setAppMode("links") },
-                                    onSelectIptv = { setAppMode("iptv") }
+                                    onSelectLinks = { appMode = "links" },
+                                    onSelectIptv = { appMode = "iptv" }
                                 )
                                 "iptv" -> IptvRoot(
                                     repository = repository,
                                     onPlayList = { urls, titles, index -> playParsedList(urls, titles, index) },
-                                    onChangeMode = { setAppMode(null) }
+                                    onChangeMode = { appMode = null },
                                 )
                                 else -> DashboardScreen(
                                     repository = repository,
-                                    onChangeMode = { setAppMode(null) },
+                                    onChangeMode = { appMode = null },
                                     onPlayVideo = { url, title, playlist, index ->
                                         playUrlCheckingM3u(url, title, playlist, index)
                                     }
@@ -307,12 +307,12 @@ class MainActivity : ComponentActivity() {
         isPlayingVideo = true
     }
 
-    private fun setAppMode(mode: String?) {
-        appMode = mode
-        getSharedPreferences("app_prefs", Context.MODE_PRIVATE).edit().apply {
-            if (mode == null) remove("app_mode") else putString("app_mode", mode)
-        }.apply()
-    }
+    private fun setAppModeFix(mode: String?) {
+    appMode = mode
+    getSharedPreferences("app_prefs", Context.MODE_PRIVATE).edit().apply {
+        if (mode == null) remove("app_mode") else putString("app_mode", mode)
+    }.apply()
+}
 
     // ✅ NUEVO: reproduce una lista ya armada (episodios de una serie IPTV o una sola película),
     // sin re-analizar el texto como URL — usa el MISMO reproductor y el mismo mecanismo de
